@@ -1,0 +1,60 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+    height: 100%;
+}
+
+
+.fita {
+    /*position: absolute;
+    width: 100%;*/
+    margin-top: 15px;
+}
+
+#linha-fita{
+    font-size: 18pt;
+}
+
+.sucesso{
+    background-color: #67E667;
+}
+
+.erro{
+    background-color: #FF4040;
+}
+
+#botao-info{
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: block;
+    padding: 5px 8px;
+    cursor: pointer;
+    font-size: 20px;
+}
+
+#panel-estado, #panel-alfabeto, #panel-alfabeto-fita{
+    display: none;
+}
+
+.lista{
+    background-color: #eeeeee;
+    text-decoration: none !important;
+    border-radius: 5px;
+    padding: 5px;
+    margin: 2px 5px 2px 0px;
+}
+
+#btn-prosseguir{
+    /*cursor: url(../img/error.png), auto;*/
+    pointer-events: none;
+}
+
+#debug{
+    font-family: "Courier New", Courier, "Lucida Sans Typewriter", "Lucida Typewriter", monospace;
+}
+

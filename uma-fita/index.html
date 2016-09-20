@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Máquina de Turing | Mateus Zanini</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="assets/img/tape.png" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+    
+    <script src="assets/js/script.js"></script>
+
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row col-lg-12 text-center">
+            <a href="turing.html" class="btn btn-link ">Versão funcional <i class="fa fa-arrow-right" aria-hidden="true"></i></a>
+        </div>
+        <!-- INICIO .fita -->
+        <div class="row fita">
+            <div class="col-lg-12">
+                <table class="table table-bordered tabela-fita">
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+            <!-- FIM .fita -->
+        </div>
+
+
+        <div class="panel panel-default col-lg-8">
+            <div class="panel-body">
+                <!-- chama modal info -->
+                <p class="" id="botao-info" data-toggle="modal" data-target="#info">
+                    <i class="fa fa-info-circle" aria-hidden="true"></i>
+                </p>
+
+                <!-- formulário -->
+                <div>
+                    <form class="col-lg-4" id="formulario">
+                        <!-- ESTADOS -->
+                        <div class="form-group">
+                            <label for="input-estado">Estados</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Q</div>
+                                <input type="text" class="form-control" id="input-estado" placeholder="Pressione Enter para adicionar o Estado" onkeypress="insereEstado(event)">
+                            </div>
+                        </div>
+
+                        <div class="info-estado">
+
+                        </div>
+
+                        <div class="panel panel-default" id="panel-estado">
+                            <div class="panel-body" id="estados-cadastrados">
+
+                            </div>
+                        </div>
+
+                        <!-- ALFABETO -->
+                        <div class="form-group">
+                            <label for="input-alfabeto">Alfabeto aceito pela máquina</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">&Sigma;</div>
+                                <input type="text" class="form-control" id="input-alfabeto" placeholder="Pressione Enter para adicionar o Símbolo" onkeypress="insereAlfabeto(event)">
+                            </div>
+                        </div>
+
+                        <div class="info-alfabeto">
+
+                        </div>
+
+                        <div class="panel panel-default" id="panel-alfabeto">
+                            <div class="panel-body" id="alfabeto-cadastrado">
+
+                            </div>
+                        </div>
+
+                        <!-- FITA -->
+                        <div class="form-group">
+                            <label for="input-fita">Alfabeto final da fita</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">&Gamma;</div>
+                                <input type="text" class="form-control" id="input-fita" placeholder="Pressione Enter para adicionar o Símbolo" onkeypress="insereAlfabetoFita(event)">
+                            </div>
+                        </div>
+
+                        <div class="info-fita">
+
+                        </div>
+
+                        <div class="panel panel-default" id="panel-alfabeto-fita">
+                            <div class="panel-body" id="alfabeto-fita-cadastrado">
+                                <!--<div id="copia">
+                                    <a class="btn btn-default col-lg-12" id="btn-copia" onclick="copia()"><i class="fa fa-clone" aria-hidden="true"></i>&nbsp;Copiar do alfabeto inicial</a>
+                                </div>
+                                <div id="">
+                                    
+                                </div>-->
+                            </div>
+                        </div>
+
+                        <!-- ESTADO INICIAL -->
+                        <div class="form-group">
+                            <label for="estado-inicial">Estado inicial</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">s &isin; Q</div>
+                                <select class="form-control" onclick="selecionaInicial()" id="estado-inicial">
+                                  
+                                </select>
+                            </div>
+                        </div>
+
+                        <!-- ESTADOS FINAIS -->
+                        <div class="form-group">
+                            <label for="estados-finais">Estados finais (F &sube; Q)</label>
+                            <div class="checkbox estados-finais">
+
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div id="btn-prosseguir" class="form-group">
+                                </br></br>
+                                <a id="next1" class="btn btn-default col-lg-12" onclick="next1();"><i class="fa fa-arrow-right" aria-hidden="true"></i>&nbsp;Prosseguir</a>
+                            </div>
+                        </div>
+
+                    </form>
+
+                </div>
+
+                <div class="col-lg-8" id="transicao">
+                    <h4 class="text-center">Transições</h4>
+                    <hr/>
+                    <div class="row">
+                        <!-- Estado atual -->
+                        <div class="form-group col-lg-6">
+                            <label for="transicao-estado-atual">Estado atual</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Q</div>
+                                <select class="form-control" id="transicao-estado-atual">
+                                  
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Lido na fita -->
+                        <div class="form-group col-lg-6">
+                            <label for="transicao-lido-fita">Lido na fita</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">&Sigma;</div>
+                                <select class="form-control" id="transicao-lido-fita">
+                                  
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <!-- Próximo estado -->
+                        <div class="form-group col-lg-4">
+                            <label for="tansicao-proximo-estado">Próximo estado</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">Q</div>
+                                <select class="form-control" id="tansicao-proximo-estado">
+                                  
+                                </select>
+                            </div>
+                        </div>
+                        <!-- Escreve na fita -->
+                        <div class="form-group col-lg-4">
+                            <label for="tansicao-escreve-fita">Escreve na fita</label>
+                            <div class="input-group">
+                                <div class="input-group-addon">&Gamma;</div>
+                                <select class="form-control" id="tansicao-escreve-fita">
+                                  
+                                </select>
+                            </div>
+                        </div>
+                        <!-- movimento -->
+                        <div class="form-group col-lg-4">
+                            <label for="tansicao-movimento">Movimento</label>
+                            <select class="form-control" id="tansicao-movimento">
+                              
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div id="btn-adicionar-transicao" class="form-group">
+                            <a id="adicionar-transicao" onclick="adicionaTransicao();" class="btn col-lg-12" onclick=""><i class="fa fa-plus" aria-hidden="true"></i>&nbsp;Adicionar transição</a>
+                        </div>
+                    </div>
+                    
+                    <hr/>
+                    
+                    <div class="row">
+                        <ul class="list-unstyled" id="transicoes-adicionadas">
+                            <li><strong>(Q x &Gamma;) &rArr; (Q x &Gamma; [L, R, S])</strong></li>
+                        </ul> 
+                    </div>
+                    
+                    <hr/>
+                    
+                    <!-- Fita de entrada -->
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">Fita de entrada</div>
+                            <input type="text" class="form-control" id="fita-entrada" onkeyup="habilitarCalcula()">
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div id="btn-calcular" class="form-group">
+                            <a id="calcular" class="btn col-lg-12" onclick="calcular()"><i class="fa fa-calculator" aria-hidden="true"></i>&nbsp;Calcular máquina</a>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+            </div>
+        </div>
+        
+        <div class="panel panel-default col-lg-4">
+            <div class="panel-body">
+                 <div class="form-group">
+                    <label for="debug">Debug</label>
+                    <textarea class="form-control" rows="10" id="debug" placeholder="#" readonly="true"></textarea>
+                    
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal  info -->
+        <div class="modal fade" id="info" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Máquina de Turing (Definição formal)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Uma Máquina de Turing de uma fita é usualmente definida por <strong>M = (Q, &Sigma;, &Gamma;, s, &epsilon;, F, &delta;)</strong>, onde:</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Q</strong> é um conjunto finito de estados.</li>
+                            <li><strong>&Sigma;</strong> é um alfabeto (conjunto finito de símbolos) que serão aceitos pela máquina.</li>
+                            <li><strong>&Gamma;</strong> é o alfabeto final da fita.</li>
+                            <li><strong>s &isin; Q</strong> é o estado inicial.</li>
+                            <li><strong>&epsilon; &isin; &Gamma;</strong> é o símbolo branco (vazio).</li>
+                            <li><strong>F &sube; Q</strong> é o conjunto dos estados finais.</li>
+                            <li><strong>&delta; : (Q x &Gamma;) &rArr; (Q x &Gamma; [L, R, S])</strong> é a função de transição, onde L é o movimento para a esquerda e R é o movimento para a direita na fita.</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- FIM .container -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+</body>
+
+</html>
