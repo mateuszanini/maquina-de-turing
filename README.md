@@ -4,7 +4,3 @@ Trabalho apresentado para a disciplina de Teoria da Computação, da 6ª fase do
 
 
 [Demo](https://mateuszanini.github.io/maquina-de-turing/)
-
-```
-código
-```
