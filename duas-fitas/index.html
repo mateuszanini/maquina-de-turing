@@ -25,11 +25,27 @@
         </div>
         
         <div class="row">
+            <div class="col-lg-12 text-center">
+                <h3>Máquina de Turing - Duas Fitas</h3>
+                <h3><small>Mateus Zanini - Teoria da Computação - 2016</small></h3>
+            </div>
+        </div>
+        
+        <div class="row">
             <div class="col-lg-12">
                 <div class="panel panel-default">
                     <div class="panel-body">
-                        <p class="text-justify">Esta Máquina de Turing aceita como entrada o arquivo gerado pelo <strong>JFLAP versão 7.0</strong>.
-                         <a href="jflap/JFLAP.jar" class="btn btn-link"><i class="fa fa-download" aria-hidden="true"></i> Download JFLAP 7.0</a></p>
+                        <div class="row col-lg-12">
+                            <p class="text-justify">Esta Máquina de Turing aceita como entrada o arquivo gerado pelo <strong>JFLAP versão 7.0</strong>.
+                        </div>
+                        <div class="row text-center">
+                            <div class="col-lg-6">
+                                <a href="../uma-fita/jflap/JFLAP.jar" class="btn btn-link"><i class="fa fa-download" aria-hidden="true"></i> Download JFLAP 7.0</a></p>
+                            </div>
+                            <div class="col-lg-6">
+                                <a href="assets/exemplos.zip" class="btn btn-link"><i class="fa fa-file" aria-hidden="true"></i> Download Arquivos de Exemplo</a></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -100,16 +116,24 @@
 
             <div class="col-lg-8">
                 <div class="row">
-                    <div class="col-lg-8">
+                    <div class="col-lg-6">
                         <div class="form-group">
                             <div class="input-group">
-                                <div class="input-group-addon">Fita de entrada</div>
-                                <input type="text" class="form-control" id="input-fita" placeholder="aabb*">
+                                <div class="input-group-addon">Fita 1</div>
+                                <input type="text" class="form-control" id="input-fita-1" placeholder="aabab">
                             </div>
                         </div>
                     </div>
-                    <div class="col-lg-4">
-                        <a id="calcular" class="btn btn-success col-lg-12" onclick="calculaTuring()"><i class="fa fa-calculator" aria-hidden="true"></i>&nbsp;Calcular máquina</a>
+                    <div class="col-lg-6">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">Fita 2</div>
+                                <input type="text" class="form-control" id="input-fita-2" placeholder="xyyxx">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <a id="calcular" class="btn btn-success col-xs-12 col-sm-12 col-lg-12" onclick="calculaTuring()"><i class="fa fa-calculator" aria-hidden="true"></i>&nbsp;Calcular máquina</a>
                     </div>
                 </div>
                 
@@ -147,14 +171,6 @@
 
                     </div>
                 </div>
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col-lg-12 text-center">
-                <hr/>
-                <h3>Mateus Zanini</h3>
-                <h2><small>Teoria da Computação - 2016</small><h2>
             </div>
         </div>
 

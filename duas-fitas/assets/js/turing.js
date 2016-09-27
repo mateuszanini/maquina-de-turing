@@ -17,19 +17,26 @@ function Estado(){
 function Transicao() {
     var from;
     var to;
-    var read;
-    var write;
-    var move;
+    var read1;
+    var write1;
+    var move1;
+    var read2;
+    var write2;
+    var move2;
     
     this.from = 0;
     this.to = 0;
-    this.read = null;
-    this.write = null;
-    this.move = 0;
+    this.read1 = null;
+    this.write1 = null;
+    this.move1 = 0;
+    this.read2 = null;
+    this.write2 = null;
+    this.move2 = 0;
 }
 
 window.onload = function(){
   mensagem("Nenhum arquivo carregado até o momento!", "warning");
+  $("#calcular").css("pointer-events", "none");
 }
 
 function mensagem(mensagem, status){
@@ -43,16 +50,19 @@ var estados = new Array();
 var transicoes = new Array();
 
 function carregarArquivo() {
-    var fileToLoad = document.getElementById("input-arquivo").files[0];
+    var arquivo = document.getElementById("input-arquivo").files[0];
     
     var fileReader = new FileReader();
     fileReader.onload = function(fileLoadedEvent) {
-        var textFromFileLoaded = fileLoadedEvent.target.result;
-        console.log(textFromFileLoaded);
+        var xml = fileLoadedEvent.target.result;
         
-        mensagem("Arquivo lido com sucesso!", "success");
+        //console.log(xml);
         
-        $(textFromFileLoaded).find('block').each(function() {
+        if($(xml).find('type').text() == "turing" && $(xml).find('tapes').text() == "2"){
+            mensagem("Arquivo lido com sucesso!", "success");
+            $("#calcular").css("pointer-events", "auto");
+            
+            $(xml).find('block').each(function() {
                var tmpEstado = new Estado();
                 
                 var inicial = false;
@@ -71,13 +81,17 @@ function carregarArquivo() {
                 estados.push(tmpEstado);
             });
             console.log(estados);
+            
+        }else{
+            mensagem("Arquivo inválido!", "danger");
+        }
     };
     
     fileReader.onerror = function(){
         mensagem("Erro ao ler o arquivo!", "danger");
     };
     
-    fileReader.readAsText(fileToLoad, "UTF-8");
+    fileReader.readAsText(arquivo, "UTF-8");
 }
 
 /*$(function() {
