@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Máquina de Turing | Mateus Zanini</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link rel="icon" href="assets/img/tape.png" />
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/style.css">
+
+</head>
+
+<body>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <a href="index.html" class="btn btn-link "><i class="fa fa-home" aria-hidden="true"></i> Home</a>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <p class="text-justify">Esta Máquina de Turing aceita como entrada o arquivo gerado pelo <strong>JFLAP versão 7.0</strong>.
+                         <a href="jflap/JFLAP.jar" class="btn btn-link"><i class="fa fa-download" aria-hidden="true"></i> Download JFLAP 7.0</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <form class="form-group" id="formulario" enctype="multipart/form-data">
+                          <div class="form-group">
+                            <div class="input-group">
+                              <div class="input-group-addon"><i class="fa fa-file-code-o" aria-hidden="true"></i></div>
+                              <input type="file" class="form-control" id="input-arquivo" placeholder="Selecione um arquivo .jff">
+                            </div>
+                            <p class="help-block">Upload de arquivo no formato .jff</p>
+                          </div>
+                          <button type="submit" id="envia" class="btn btn-primary col-lg-12"><i class="fa fa-upload" aria-hidden="true"></i> Carregar arquivo</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8" id="mensagem">
+                
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <a class="btn btn-default col-lg-12" id="botao-info" data-toggle="modal" data-target="#info">
+                            <i class="fa fa-info-circle" aria-hidden="true"></i> Informações sobre Máquina de Turing
+                        </a>
+                    </div>
+
+                    <div class="list-group">
+                        <a href="#" class="list-group-item" id="info-alfabeto-maquina">
+                            <h4 class="list-group-item-heading">
+                                Alfabeto aceito pela máquina 
+                                <span class="badge">&Sigma;</span>
+                            </h4>
+                        </a>
+                        <a href="#" class="list-group-item" id="info-alfabeto-fita">
+                            <h4 class="list-group-item-heading">
+                                Alfabeto da fita
+                                <span class="badge">&Gamma;</span>
+                            </h4>
+                            <p class="list-group-item-text" id="info-alfabeto-fita"></p>
+                        </a>
+                        <a href="#" class="list-group-item" id="info-estados">
+                            <h4 class="list-group-item-heading">
+                                Estados 
+                                <span class="badge">Q</span>
+                            </h4>
+                        </a>
+                        <a href="#" class="list-group-item" id="info-transicoes">
+                            <h4 class="list-group-item-heading">
+                                Transições
+                                <span class="badge">&delta;</span>
+                            </h4>
+                            <p><strong>(Q x &Gamma;) &rArr; (Q x &Gamma; [L, R, S])</strong></p>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-8">
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-addon">Fita de entrada</div>
+                                <input type="text" class="form-control" id="input-fita" placeholder="aabb*">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <a id="calcular" class="btn btn-success col-lg-12" onclick="calculaTuring()"><i class="fa fa-calculator" aria-hidden="true"></i>&nbsp;Calcular máquina</a>
+                    </div>
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="list-group" id="debug">
+                            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- Modal  info -->
+        <div class="modal fade" id="info" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Máquina de Turing (Definição formal)</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Uma Máquina de Turing de uma fita é usualmente definida por <strong>M = (Q, &Sigma;, &Gamma;, s, &epsilon;, F, &delta;)</strong>, onde:</p>
+                        <ul class="list-unstyled">
+                            <li><strong>Q</strong> é um conjunto finito de estados.</li>
+                            <li><strong>&Sigma;</strong> é um alfabeto (conjunto finito de símbolos) que serão aceitos pela máquina.</li>
+                            <li><strong>&Gamma;</strong> é o alfabeto final da fita.</li>
+                            <li><strong>s &isin; Q</strong> é o estado inicial.</li>
+                            <li><strong>&epsilon; &isin; &Gamma;</strong> é o símbolo branco (vazio).</li>
+                            <li><strong>F &sube; Q</strong> é o conjunto dos estados finais.</li>
+                            <li><strong>&delta; : (Q x &Gamma;) &rArr; (Q x &Gamma; [L, R, S])</strong> é a função de transição, onde L é o movimento para a esquerda e R é o movimento para a direita na fita.</li>
+                        </ul>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <hr/>
+                <h3>Mateus Zanini</h3>
+                <h2><small>Teoria da Computação - 2016</small><h2>
+            </div>
+        </div>
+
+        <!-- FIM .container -->
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <script src="assets/js/turing.js"></script>
+
+</body>
+
+</html>
