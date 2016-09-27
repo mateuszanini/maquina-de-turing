@@ -1,4 +1,7 @@
 /*global $*/
+/*global setCharAt*/
+
+var simboloVazio = "*";
 
 function Estado(){
     
@@ -60,6 +63,10 @@ function carregarArquivo() {
         
         if($(xml).find('type').text() == "turing" && $(xml).find('tapes').text() == "2"){
             mensagem("Arquivo lido com sucesso!", "success");
+            
+            estados = [];
+            transicoes = [];
+            
             $("#calcular").css("pointer-events", "auto");
             
             $(xml).find('block').each(function() {
@@ -79,8 +86,75 @@ function carregarArquivo() {
                 }
                 
                 estados.push(tmpEstado);
+                
             });
+            
+             $(xml).find('transition').each(function() {
+                var tmpTransicao = new Transicao();
+                
+                tmpTransicao.from = $(this).find("from").text();
+                tmpTransicao.to = $(this).find("to").text();
+                
+                $(this).find("read").each(function() {
+					if ($(this).attr("tape") === '1') {
+						tmpTransicao.read1 = $(this).text();
+						if(tmpTransicao.read1 == ""){
+						    tmpTransicao.read1 = simboloVazio;
+						}
+					}
+					if ($(this).attr("tape") === '2') {
+						tmpTransicao.read2 = $(this).text();
+						if(tmpTransicao.read2 == ""){
+						    tmpTransicao.read2 = simboloVazio;
+						}
+					}
+				});
+				
+				$(this).find("write").each(function() {
+					if ($(this).attr("tape") === '1') {
+						tmpTransicao.write1 = $(this).text();
+						if(tmpTransicao.write1 == ""){
+						    tmpTransicao.write1 = simboloVazio;
+						}
+					}
+					if ($(this).attr("tape") === '2') {
+						tmpTransicao.write2 = $(this).text();
+						if(tmpTransicao.write2 == ""){
+						    tmpTransicao.write2 = simboloVazio;
+						}
+					}
+				});
+				
+				var mov1;
+				var mov2;
+				
+				$(this).find("move").each(function() {
+					if ($(this).attr("tape") === '1') {
+					    mov1 = $(this).text();
+					}
+					if ($(this).attr("tape") === '2') {
+						mov2 = $(this).text();
+					}
+				});
+				
+                if(mov1 == "L") mov1 = -1;
+                if(mov1 == "S") mov1 = 0;
+                if(mov1 == "R") mov1 = 1;
+                
+                if(mov2 == "L") mov2 = -1;
+                if(mov2 == "S") mov2 = 0;
+                if(mov2 == "R") mov2 = 1;
+                
+                tmpTransicao.move1 = mov1;
+                tmpTransicao.move2 = mov2;
+                transicoes.push(tmpTransicao);
+                
+                //preencheInfo();
+                
+            });
+            
             console.log(estados);
+            console.log(transicoes);
             
         }else{
             mensagem("Arquivo inválido!", "danger");
@@ -93,77 +167,3 @@ function carregarArquivo() {
     
     fileReader.readAsText(arquivo, "UTF-8");
 }
-
-/*$(function() {
-
-    $.ajax({
-        type: 'GET',
-        url: 'xml/jflap.jff',
-        dataType: 'xml',
-        success: function(xml) {
-            
-            mensagem("Arquivo lido com sucesso!", "success");
-            
-            $(xml).find('block').each(function() {
-                
-                //var qtdEstados = estados.length;
-                
-                var tmpEstado = new Estado();
-                
-                var inicial = false;
-                var final = false;
-                
-                tmpEstado.id = $(this).attr("id");
-                tmpEstado.nome = $(this).attr("name");
-                
-                if($(this).find("initial").text() == "Inicial"){
-                    inicial = true;
-                }
-                if($(this).find("final").text() == "Final"){
-                    final = true;
-                }
-                
-                tmpEstado.estadoInicial = inicial;
-                tmpEstado.estadoFinal = final;
-                
-                estados.push(tmpEstado);
-            });
-            
-            $(xml).find('transition').each(function() {
-               
-               //var qtdTransicoes = transicoes.length;
-               
-               var tmpTransicao = new Transicao();
-               
-               tmpTransicao = new Transicao();
-               
-               tmpTransicao.from = $(this).find("from").text();
-               tmpTransicao.to = $(this).find("to").text();
-               tmpTransicao.read = $(this).find("read").text();
-               tmpTransicao.write = $(this).find("write").text();
-               
-               var mov = $(this).find("move").text();
-               
-               if(mov == "L"){
-                   mov = -1;
-               }
-               if(mov == "S"){
-                   mov = 0;
-               }
-               if(mov == "R"){
-                   mov = 1;
-               }
-               
-               tmpTransicao.move = mov;
-               
-               transicoes.push(tmpTransicao);
-                
-            });
-            
-            console.log(estados);
-            console.log(transicoes);
-            
-            preencheInfo();
-        }
-    });
-});*/
