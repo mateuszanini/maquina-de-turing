@@ -149,12 +149,12 @@ function carregarArquivo() {
                 tmpTransicao.move2 = mov2;
                 transicoes.push(tmpTransicao);
                 
-                //preencheInfo();
-                
             });
             
             console.log(estados);
             console.log(transicoes);
+            
+            preencheInfo();
             
         }else{
             mensagem("Arquivo inválido!", "danger");
@@ -166,4 +166,100 @@ function carregarArquivo() {
     };
     
     fileReader.readAsText(arquivo, "UTF-8");
+}
+
+function preencheInfo(){
+    
+    //ALFABETO MAQUINA
+    var uniqueAlfabeto = {};
+    var distinctAlfabeto = [];
+    transicoes.forEach(function (x) {
+      if (!uniqueAlfabeto[x.read1]) {
+        distinctAlfabeto.push(x.read1);
+        uniqueAlfabeto[x.read1] = true;
+      }
+      if (!uniqueAlfabeto[x.read2]) {
+        distinctAlfabeto.push(x.read2);
+        uniqueAlfabeto[x.read2] = true;
+      }
+    });
+    $("#info-alfabeto-maquina").html('<p>' +
+            distinctAlfabeto + '</p>');
+            
+    //ALFABETO FITA
+    var uniqueFita = {};
+    var distinctFita = [];
+    transicoes.forEach(function (x) {
+      if (!uniqueFita[x.write1]) {
+        distinctFita.push(x.write1);
+        uniqueFita[x.write1] = true;
+      }
+      if (!uniqueFita[x.write2]) {
+        distinctFita.push(x.write2);
+        uniqueFita[x.write2] = true;
+      }
+    });
+    $("#info-alfabeto-fita").html('<p>' +
+            distinctFita + '</p>');
+            
+    //ESTADOS
+    $("#info-estados").html("");
+    for(var i = 0; i < estados.length; i++){
+        var inicial = estados[i].estadoInicial;
+        if(inicial){
+            inicial = " &rArr; <strong>Inicial</strong> ";
+        }else{
+            inicial = "";
+        }
+        
+        var final = estados[i].estadoFinal;
+        if(final){
+            final = " &rArr; <strong>Final</strong> ";
+        }else{
+            final = "";
+        }
+        
+        $("#info-estados").append(
+            '<p>' + estados[i].id +
+            ' &rArr; ' + estados[i].nome + inicial + final);
+    }
+    
+    //TRANSIÇÕES
+    $("#info-transicoes").html(
+        '<div class="col-lg-6">'+
+            '<p><strong>Fita 1</strong></p>'+
+        '</div>'+
+        '<div class="col-lg-6">'+
+            '<p><strong>Fita 2</strong></p>'+
+        '</div>'
+    );
+    for(i = 0; i < transicoes.length; i++){
+        var mov1 = transicoes[i].move1;
+        if(mov1 == -1) mov1 = "L";
+        if(mov1 == 0) mov1 = "S";
+        if(mov1 == 1) mov1 = "R";
+        
+        var mov2 = transicoes[i].move2;
+        if(mov2 == -1) mov2 = "L";
+        if(mov2 == 0) mov2 = "S";
+        if(mov2 == 1) mov2 = "R";
+        
+        $("#info-transicoes").append(
+            '<div class="col-lg-6">'+
+            '<p>(' + transicoes[i].from +
+            ' x ' + transicoes[i].read1 +
+            ') &rArr; (' + transicoes[i].to +
+            ' x ' + transicoes[i].write1 +
+            ' x ' + mov1 +
+            ')</p></div>'+
+            '<div class="col-lg-6">'+
+            '<p>(' + transicoes[i].from +
+            ' x ' + transicoes[i].read2 +
+            ') &rArr; (' + transicoes[i].to +
+            ' x ' + transicoes[i].write2 +
+            ' x ' + mov2 +
+            ')</p></div>'
+            );
+    }
+    
 }
