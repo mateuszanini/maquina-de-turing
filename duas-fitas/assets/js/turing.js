@@ -1,7 +1,7 @@
 /*global $*/
 /*global setCharAt*/
 
-var simboloVazio = "*";
+var simboloVazio = '<i class="fa fa-square-o" aria-hidden="true"></i>';
 
 function Estado(){
     
@@ -262,4 +262,97 @@ function preencheInfo(){
             );
     }
     
+}
+
+function calculaTuring(){
+    
+    $("#debug").html("");
+    
+    var input1 = $("#input-fita-1").val();  
+    var input2 = $("#input-fita-2").val();  
+    
+    input1 = input1.split("");
+    //input1.push("*");
+    input2 = input2.split("");
+    
+    var cabecote1 = 0;
+    var cabecote2 = 0;
+    
+    var estadoAtual = 0;
+    
+    for(var i = 0; i < estados.length; i++){
+        if(estados[i].estadoInicial === true){
+            estadoAtual = parseInt(estados[i].id);
+        }
+    }
+    /*
+    while(cabecote1 < input1.length){
+        
+        var valido = false;
+        
+        var debug = '<a href="#" class="list-group-item">';
+        
+        debug += 'Input 1: ' + input1 + '<br>';
+        debug += 'Input 2: ' + input2 + '<br>';
+        debug += 'Cabeçote 1: ' + cabecote1 + '<br>';
+        debug += 'Cabeçote 2: ' + cabecote2 + '<br>';
+        debug += 'Estado atual: ' + estadoAtual + '<br>';
+        
+        for(var i = 0; i < transicoes.length; i++){
+            if(parseInt(transicoes[i].from) === parseInt(estadoAtual)){
+                if(String(transicoes[i].read1) === String(input1[cabecote1])){
+                    
+                    debug += 'Lido na fita 1: ' + input1[cabecote1] + '<br>';
+                    
+                    //input.splice(cabecote, 1, transicoes[i].write);
+                    input1[cabecote1] = transicoes[i].write1;
+                    
+                    debug += 'Escreve na fita 1: ' + input1[cabecote1] + '<br>';
+                    debug += 'Movimento 1: ' + transicoes[i].move1 + '<br>';
+                    
+                    cabecote1 += parseInt(transicoes[i].move1);
+                    estadoAtual = parseInt(transicoes[i].to);
+                    
+                    valido = true;
+                    break;
+                }
+                if(String(transicoes[i].read2) === String(input2[cabecote2])){
+                    
+                    debug += 'Lido na fita 2: ' + input2[cabecote2] + '<br>';
+                    
+                    //input.splice(cabecote, 1, transicoes[i].write);
+                    input2[cabecote2] = transicoes[i].write2;
+                    
+                    debug += 'Escreve na fita 2: ' + input2[cabecote2] + '<br>';
+                    debug += 'Movimento 2: ' + transicoes[i].move2 + '<br>';
+                    
+                    cabecote2 += parseInt(transicoes[i].move2);
+                    estadoAtual = parseInt(transicoes[i].to);
+                    
+                    valido = true;
+                    break;
+                }
+            }
+        }
+        if(valido === false){
+            //console.log("Transição não encontrada");
+            break;
+        }
+        debug += '</a>';
+        $("#debug").append(debug);
+        
+    }
+    
+    console.log(input1, input2);
+    
+    input1.pop();
+    input2.pop();
+    
+    if(estados[estadoAtual].estadoFinal){
+        console.log("Palavra Válida");
+        mensagem("Palavra Válida! Valor final da fita: " + input1 + " - " + input2, "success");
+    }else{
+        console.log("Palavra Inválida");
+        mensagem("Palavra Inválida! Valor final da fita: " + input1 + " - " + input2, "danger");
+    }*/
 }
