@@ -323,11 +323,10 @@ function calculaTuring() {
         }
     }
 
-    //while(estados[estadoAtual.indice].estadoFinal == false){
     var aux1 = 0;
     var aux2 = 0;
     var final = false;
-    
+
     maquina: {
         while (!final) {
 
@@ -372,116 +371,38 @@ function calculaTuring() {
             }
         }
     }
-    
-    console.log(input1);
-    console.log(input2);
-    
-    if(final){
-        console.log("Palavra Válida");
-        mensagem('<p>Palavra Válida!</p><hr/>'+
-        '<div class="row">'+
-            '<div class="col-lg-6">'+
-                '<strong><p>Fita 1</p></strong>'+
-                input1 +
-            '</div>'+
-            '<div class="col-lg-6">'+
-                '<strong><p>Fita 2</p></strong>'+
-                input2 +
-            '</div>'+
-        '</div>', 
-        'success');
-    }else{
-        console.log("Palavra Inválida");
-        mensagem('<p>Palavra Inválida!</p><hr/>'+
-        '<div class="row">'+
-            '<div class="col-lg-6">'+
-                '<strong><p>Fita 1</p></strong>'+
-                input1 +
-            '</div>'+
-            '<div class="col-lg-6">'+
-                '<strong><p>Fita 2</p></strong>'+
-                input2 +
-            '</div>'+
-        '</div>', 
-        'danger');
-    }
-
-    return;
-
-    while (estados[estadoAtual.indice].estadoFinal === false) {
-
-        var valido = false;
-
-        var debug = '<a href="#" class="list-group-item">';
-
-        debug += 'Input 1: ' + input1 + '<br>';
-        debug += 'Cabeçote 1: ' + cabecote1 + '<br>';
-        debug += 'Input 2: ' + input2 + '<br>';
-        debug += 'Cabeçote 2: ' + cabecote2 + '<br>';
-        debug += 'Estado atual: ' + estadoAtual.id + '<br>';
-
-        for (var i = 0; i < transicoes.length; i++) {
-            if (parseInt(transicoes[i].from) === parseInt(estadoAtual.id)) {
-                if ((String(transicoes[i].read1) === String(input1[cabecote1]) &&
-                        (String(transicoes[i].read2) === String(input2[cabecote2])))) {
-                    //fita 1
-                    debug += 'Lido na fita 1: ' + input1[cabecote1] + '<br>';
-                    //input.splice(cabecote, 1, transicoes[i].write);
-                    //nput1[cabecote1] = transicoes[i].write1;
-                    input1.splice(cabecote1, 1, transicoes[i].write1);
-
-                    debug += 'Escreve na fita 1: ' + input1[cabecote1] + '<br>';
-                    debug += 'Movimento 1: ' + transicoes[i].move1 + '<br>';
-
-                    cabecote1 += parseInt(transicoes[i].move1);
-
-                    //fita 2
-                    debug += 'Lido na fita 2: ' + input2[cabecote2] + '<br>';
-                    //input2[cabecote2] = transicoes[i].write2;
-                    input2.splice(cabecote2, 1, transicoes[i].write2);
-
-                    debug += 'Escreve na fita 2: ' + input2[cabecote2] + '<br>';
-                    debug += 'Movimento 2: ' + transicoes[i].move2 + '<br>';
-
-                    cabecote2 += parseInt(transicoes[i].move2);
-
-                    //altera o estado atual
-                    estadoAtual.id = parseInt(transicoes[i].to);
-                    for (var i = 0; i < estados.length; i++) {
-                        if (parseInt(estados[i].id) == parseInt(estadoAtual.id)) {
-                            estadoAtual.indice = i;
-                        }
-                        else {
-                            console.log("deu ruim");
-                        }
-                    }
-
-                    valido = true;
-                    break;
-                }
-            }
-        }
-        if (valido === false) {
-            //console.log("Transição não encontrada");
-            break;
-        }
-        debug += '</a>';
-        $("#debug").append(debug);
-
-    }
 
     console.log(input1);
     console.log(input2);
 
-    input1.pop();
-    input2.pop();
-
-    if (estados[estadoAtual.indice].estadoFinal) {
+    if (final) {
         console.log("Palavra Válida");
-        mensagem("Palavra Válida! Valor final da fita: " + input1 + " - " + input2, "success");
+        mensagem('<p>Palavra Válida!</p><hr/>' +
+            '<div class="row">' +
+            '<div class="col-lg-6">' +
+            '<strong><p>Fita 1</p></strong>' +
+            input1 +
+            '</div>' +
+            '<div class="col-lg-6">' +
+            '<strong><p>Fita 2</p></strong>' +
+            input2 +
+            '</div>' +
+            '</div>',
+            'success');
     }
     else {
         console.log("Palavra Inválida");
-        mensagem("Palavra Inválida! Valor final da fita: " + input1 + " - " + input2, "danger");
+        mensagem('<p>Palavra Inválida!</p><hr/>' +
+            '<div class="row">' +
+            '<div class="col-lg-6">' +
+            '<strong><p>Fita 1</p></strong>' +
+            input1 +
+            '</div>' +
+            '<div class="col-lg-6">' +
+            '<strong><p>Fita 2</p></strong>' +
+            input2 +
+            '</div>' +
+            '</div>',
+            'danger');
     }
 }
